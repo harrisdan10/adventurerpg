@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 from rooms import rooms
-
+import sys
 
 # Replace RPG starter project with this code when new instructions are live
 
@@ -24,7 +24,7 @@ def showStatus():
     print('Inventory : ' + str(inventory))
     # print an item if there is one
     if "item" in rooms[currentRoom]:
-        print('You see a ' + rooms[currentRoom]['item'])
+        print(f"You see a {rooms[currentRoom]['item']}")
     print("---------------------------")
 
 
@@ -36,7 +36,7 @@ inventory = []
 
 
 # start the player in the Hall
-currentRoom = 'Hall'
+currentRoom = 'Basement'
 
 showInstructions()
 
@@ -72,7 +72,7 @@ while True:
         # if the room contains an item, and the item is the one they want to get
         if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
             # add the item to their inventory
-            inventory += [move[1]]
+            inventory.append(move[1])
             # display a helpful message
             print(move[1] + ' got!')
             # delete the item from the room
@@ -82,12 +82,31 @@ while True:
             # tell them they can't get it
             print('Can\'t get ' + move[1] + '!')
 
+    if move[0] == 'equip':
+        if move[1] in inventory:
+            print(f"{move[1]} equipped!")
+        else:
+            print(f"You don't have a {move[1]} in your inventory!")
+
+    if move[0] == 'q' or move[0] =='quit':
+        quitResponse = input('Are you you sure you want to quit? (Y|N): ').strip().lower()
+        if quitResponse == 'y' or quitResponse == 'yes':
+            print('Thank you for playing! Quitters never prosper!')
+            sys.exit()
+        else:
+            pass
+
     ## Define how a player can win
-    if currentRoom == 'Garden' and 'key' in inventory and 'potion' in inventory:
+    if currentRoom == 'Boss Location' and 'sword' in inventory:
         print('You escaped the house with the ultra rare key and magic potion... YOU WIN!')
         break
-
-    ## If a player enters a room with a monster
-    elif 'item' in rooms[currentRoom] and 'monster' in rooms[currentRoom]['item']:
-        print('A monster has got you... GAME OVER!')
+    elif currentRoom == 'Boss Location' and 'sword' not in inventory:
+        print('The Boss ....... GAME OVER!')
+        break
+    ## If a player enters a room with mini boss
+    elif currentRoom == 'East Hall' and '' in inventory:
+        print('')
+        break
+    elif currentRoom == 'East Hall' and '' not in inventory:
+        print('')
         break
