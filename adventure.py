@@ -3,9 +3,31 @@
 from rooms import rooms
 from player import player
 import sys
+import string
+import time
 from os import system, name
+from playsound import playsound
+import requests
+import random
+
+URL = 'https://cat-fact.herokuapp.com/facts'
+# playsound('adventure.mp3', False)
 
 # Replace RPG starter project with this code when new instructions are live
+# def cat_facts():
+#     cat = requests.get(URL).json()
+#     catFacts = []
+#     for meow in cat:
+#         catFacts.append(meow.get("text"))
+#     print(random.choice(catFacts))
+
+
+def delay(s):
+    for c in s:
+        sys.stdout.write(c)
+        sys.stdout.flush()
+        time.sleep(.03)
+    print()
 
 def showInstructions():
     # print a main menu and the commands
@@ -29,7 +51,7 @@ def clear():
 
 
 def showStatus():
-    clear()
+    # clear()
     # print the player's current status
     print('---------------------------')
     print('You are in the ' + currentRoom)
@@ -43,8 +65,9 @@ def showStatus():
 
     # print an item if there is one
     if "item" in rooms[currentRoom]:
-        print(f"You see a {rooms[currentRoom]['item']}")
-        print("---------------------------")
+        for item in rooms[currentRoom]['item']:
+            delay(f"You see a {list(item.keys())}")
+    print("---------------------------")
 
 
 player_type = ''
@@ -100,28 +123,54 @@ while True:
 
     # if they type 'get' first
     if move[0] == 'get':
-        # if the room contains an item, and the item is the one they want to get
-        if "item" in rooms[currentRoom] and move[1] in rooms[currentRoom]['item']:
-            # add the item to their inventory
-            inventory.append(move[1])
+        for item in rooms[currentRoom]['item']:
+            # if the room contains an item, and the item is the one they want to get
+            if "item" in rooms[currentRoom] and move[1] in list(item.keys()):
+                # add the item to their inventory
+                inventory.append(move[1])
 
-            # display a helpful message
-            print(move[1] + ' got!')
-            # delete the item from the room
-            item_index = rooms[currentRoom]['item'].index(move[1])
-            del rooms[currentRoom]['item'][item_index]
-            if len(rooms[currentRoom]['item']) == 0:
-                del rooms[currentRoom]['item']
-        # otherwise, if the item isn't there to get
+                # display a helpful message
+                print(f"{move[1]} got!")
+                if "description" in item[move[1]]:
+                    print(f"{rooms[currentRoom]['item'][0][move[1]]['description']}")
+                else:
+                    print(f"{item[move[1]]}")
+                # delete the item from the room
+                item_index = list(item.keys()).index(move[1])
+                if list(item.keys())[item_index] == move[1]:
+                    # print('deleted')
+                    del rooms[currentRoom]['item'][0][move[1]]
+                    if len(rooms[currentRoom]['item'][0]) == 0:
+                        del rooms[currentRoom]['item']
+
+            # otherwise, if the item isn't there to get
+            else:
+                # tell them they can't get it
+                print(f"Can\'t get {move[1]} !")
+
+    if move[0] == 'approach':
+        cat = requests.get(URL).json()
+        catFacts = []
+        for meow in cat:
+            catFacts.append(meow.get("text"))
+        if move[1] in '' and currentRoom == '':
+            print(f"All-knowing Sphinx: {random.choice(catFacts)}")
         else:
-            # tell them they can't get it
-            print('Can\'t get ' + move[1] + '!')
+            print(f"The All-knowing Sphinx is not in this room!")
 
     if move[0] == 'equip':
         if move[1] in inventory:
             print(f"{move[1]} equipped!")
         else:
             print(f"You don't have a {move[1]} in your inventory!")
+
+    if move[0] == 'teleport' and 'magic stone' in inventory:
+        room = string.capwords(move[1].title())
+        if room in list(rooms.keys()):
+            currentRoom = room
+            print(f"You are now in the {room}!")
+        else:
+            print(f"You don't have a magic stone in your inventory!")
 
     if move[0] == 'drop':
         # check that they are allowed wherever they want to go
@@ -132,7 +181,7 @@ while True:
                 inventory.remove(move[1])
                 print(f'{move[1]} was dropped')
             else:
-                rooms[currentRoom]['item'].append(move[1])
+                rooms[currentRoom]['item'][0][move[1]] = (move[1])
                 inventory.remove(move[1])
                 print(f'{move[1]} was dropped')
         # there is no door (link) to the new room
@@ -154,7 +203,7 @@ while True:
     elif currentRoom == 'Boss Location' and 'sword' not in inventory:
         print('The Boss ....... GAME OVER!')
         break
-    ## If a player enters a room with mini boss
+    # If a player enters a room with mini boss
     elif currentRoom == 'East Hall' and '' in inventory:
         print('')
         break
