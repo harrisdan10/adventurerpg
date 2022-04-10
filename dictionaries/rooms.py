@@ -13,7 +13,12 @@ rooms = {
                         'description': 'placeholder torch'
                     }
                         }],
-                'description': "This room has an irregular flagstone tile floor. Crude chalk drawings adorn the floor.\nThere's a portrait of beasts battling humans, and winning. Directly ahead you see a staircase leading upwards.\nThe wall to your right is covered in green moss. It is thick and damp and appears that water seeps from the stone behind it.\nThis room is unnaturally cold, a thin frost covers the walls and floor. The air in the room is clear and windy. The room smells stale.\nA loud banging noise can be heard."
+                'description': "The room has an irregular flagstone tile floor. Crude chalk drawings adorn the floor\n"
+                               "There's a portrait of beasts battling humans, and winning. Directly ahead you see a\n"
+                               "staircase leading upwards. he wall to your right is covered in green moss. It is\n"
+                               "thick and damp and appears that water seeps from the stone behind it.This room\n"
+                               "is unnaturally cold, a thin frost covers the walls and floor. The air in the room\n"
+                               "is clear and windy. The room smells stale. A loud banging noise can be heard."
             },
             'Parlor': {
                 'down': 'Basement',
@@ -21,7 +26,7 @@ rooms = {
                 'south': 'Basement',
                 'east': 'East Hall',
                 'west': 'West Hall',
-                'item': [{'sword':{
+                'item': [{'sword': {
                     'description': 'placeholder sword'
                     }}],
                 'description': 'The first thing you notice upon enter the large room is  an oversized human-like handprint, about ten inches across,\nit is burned into the north wall leading into the Kitchen. You look around, taking in the room, noticing the has a limestone tile floor.\nThe ceiling is a cathedral vaulted (multi-domed) and with the tattered remains of what once must have been colorful streamers hanging down\nto about eight feet from the floor. The walls of this room display a vivid scene as if one was centered in a forest meadow.\nThe grass and trees sway as if blown by wind. Investigation reveals that this is due to a permanent illusion. Laying along the north wall\nis a partially intact human skeleton. To the east lays a dark hallway, the west another with a blazing fireplace.\nThe air in the room is clear and drafty. The room smells putrid. A loud banging noise can be heard.'
@@ -32,12 +37,16 @@ rooms = {
                 'item': [{'old cloak':{
                     'description': 'monster description'
                         }}],
-                'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. A longs streak of blood or perhaps dark paint runs along what appears to be the length of the wall. The ceiling is a flat reinforced with stone beam with regular rectangular shaped beams as you process further down the hall small blue-green flames appear above-head seeming to guide you forward. A ratty old cloak hangs from a hook on one wall. The air in the hall feels heavy. The banging has ceased, but a loud slamming noise can be heard.'
+                'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. A longs streak of blood or perhaps dark\npaint runs along what appears to be the length of the wall. The ceiling is a flat reinforced with stone beam with regular rectangular shaped beams as you process\nfurther down the hall small blue-green flames appear above-head seeming to guide you forward. A ratty old cloak hangs from a hook on one wall.\nThe air in the hall feels heavy. The banging has ceased, but a loud slamming noise can be heard.'
             },
             'West Hall': {
                 'east': 'Parlor',
-                'down': 'Dungeon',
-                'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. All you can hear is the sound of the crackling fireplace and the banging as it grows louder with each step....You arrive at the end of the hall.',
+                'item': [{'fireplace': {
+                    'description': 'Behind the blazing flames you see a handle.',
+                    'description_2': 'You see a handle at the back of the fireplace',
+                    'blazing': True
+                        }}],
+                'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. All that can be heard is the sound of the crackling\nfireplace and a loud banging which seems to grows louder with each step....You arrive at the end of the hall.\n'
             },
             'Kitchen': {
                   'south': 'Parlor',
@@ -51,15 +60,21 @@ rooms = {
             },
             'Trap Room': {
                 'west': 'East Hall',
-                'item': [{'monster': {
-                    'description' : 'monster description'
+                'item': [{'mini-boss': {
+                    'description': 'mini-boss'
                 }}],
-                'description': ''
+                'description': 'The beasts body lays before you sprawled out on the floor. The stench of blood and urine fills the air'
                 },
             'Secret Door': {
                 'south': 'Kitchen',
-                'item': [{'magic stone':{
+                'item': [{'magic stone': {
                     'description': 'stone description'
+                }}],
+                'description': ''
+            },
+            'Boss Room': {
+                'item': [{'boss': {
+                    'description': 'boss'
                 }}],
                 'description': ''
             }
