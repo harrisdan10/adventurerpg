@@ -1,17 +1,19 @@
-from descriptions import description
+from descriptions import descriptions
+
 rooms = {
             'Basement': {
                 'up': 'Parlor',
                 'north': 'Parlor',
                 'item': [{
                     'note': {
-                       ' description': 'placeholder note'
+                        'description': 'placeholder note'
                     },
                     'oil': {
                         'description': 'A smooth, thick liquid that is used as a fuel or can be used to coat an item and set it ablaze.'
                     },
                     'torch': {
                         'description': 'A handheld burning fire that burns bright and serves to be a guide in the darkness.'
+
                     }
                         }],
                 'description': "The room has an irregular flagstone tile floor. Crude chalk drawings adorn the floor\n"
@@ -64,7 +66,7 @@ rooms = {
                 'item': [{'mini-boss': {
                     'description': 'mini-boss'
                 }}],
-                'description': 'The beasts body lays before you sprawled out on the floor. The stench of blood and urine fills the air.'
+                'description': 'The beasts body lays before you sprawled out on the floor. The stench of blood and urine fills the air'
                 },
             'Secret Door': {
                 'south': 'Kitchen',
