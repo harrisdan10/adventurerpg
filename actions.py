@@ -23,7 +23,7 @@ def movement(move, location, current_room, player, monster):
 
 # function that allows player to teleport to any room
 def teleport(move, rooms):
-    room = string.capwords(move[1].title())
+    room = string.capwords(move[1])
     if room in list(rooms.keys()):
         current_room = room
         print(f"You are now in the {room}!")
@@ -55,6 +55,7 @@ def get_item(move, location, inventory):
         # if the room contains an item, and the item is the one they want to get
         if "item" in location and move[1] in list(item.keys()):
             if move[1] in ["mini-boss", "boss", "fireplace"]:
+
                 print('Come on now...')
             # add the item to their inventory
             else:
@@ -125,12 +126,14 @@ def extinguish(move, location):
         print("There is nothing to extinguish.")
 
 
+
 def pull_handle(move, location):
     if move[1] == "handle":
         print('You pull the handle and the north wall crumbles, revealing a staircase leading down')
         location['down'] = 'Boss Room'
     else:
         print("There is nothing to pull")
+
 
 
 def quit_game():
@@ -171,6 +174,7 @@ def fight(player, monster, location):
                         player_dmg = player['special'] * 2
                     else:
                         player_dmg = player['special']
+
                 print(f'You strike the beast dealing {player_dmg} damage')
                 monster['health'] -= player_dmg
                 special_gauge = 0
@@ -192,15 +196,16 @@ def fight(player, monster, location):
             monster_strike_counter = 2
             player['health'] -= monster_dmg
 
+
     if monster['health'] <= 0:
         # check if mini-boss is in current room, if so delete
         if 'mini-boss' in location['item'][0]:
             del location['item'][0]['mini-boss']
-            # if not mini-boss only other monster option is boss which will be deleted
+        # if not mini-boss only other monster option is boss which will be deleted
         else:
             del location['item'][0]['boss']
             print('You managed to defeat the beast, revealing a door on the far side of the room.\n'
-                'You open it and are teleported outside. You appear to have escaped! You win!')
+                  'You open it and are teleported outside. You appear to have escaped! You win!')
             sys.exit()
 
     if player['health'] <= 0:
@@ -227,7 +232,6 @@ def boss_encounter(player, monster, location):
                       'You open it and are teleported outside.\n'
                       'You appear to have escaped. You win!')
                 sys.exit()
-
 
 def specify(move, inventory):
     if move[0] in ['get', 'drop', 'inspect', 'equip', 'unequip']:

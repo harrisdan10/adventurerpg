@@ -5,10 +5,7 @@ from player import player
 from monster import monsters
 import time
 from os import system, name
-from playsound import playsound
 from actions import *
-
-playsound('adventure.mp3', False)
 
 def delay(s):
     for c in s:
@@ -73,6 +70,7 @@ def showStatus():
                     delay(f"You see a {list(item.keys())}")
         except:
             delay(f"You see a {rooms[currentRoom]['item']}")
+
     print("---------------------------")
 
 

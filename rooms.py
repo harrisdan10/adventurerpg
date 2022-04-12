@@ -1,3 +1,5 @@
+from descriptions import descriptions
+
 rooms = {
             'Basement': {
                 'up': 'Parlor',
@@ -7,10 +9,11 @@ rooms = {
                         'description': 'placeholder note'
                     },
                     'oil': {
-                        'description': 'placeholder oil'
+                        'description': 'A smooth, thick liquid that is used as a fuel or can be used to coat an item and set it ablaze.'
                     },
                     'torch': {
-                        'description': 'placeholder torch'
+                        'description': 'A handheld burning fire that burns bright and serves to be a guide in the darkness.'
+
                     }
                         }],
                 'description': "The room has an irregular flagstone tile floor. Crude chalk drawings adorn the floor\n"
@@ -27,7 +30,7 @@ rooms = {
                 'east': 'East Hall',
                 'west': 'West Hall',
                 'item': [{'sword': {
-                    'description': 'placeholder sword'
+                    'description': 'A weapon with a long, straight, sharp-edged blade that can be used to slay an enemy.'
                     }}],
                 'description': 'The first thing you notice upon enter the large room is  an oversized human-like handprint, about ten inches across,\nit is burned into the north wall leading into the Kitchen. You look around, taking in the room, noticing the has a limestone tile floor.\nThe ceiling is a cathedral vaulted (multi-domed) and with the tattered remains of what once must have been colorful streamers hanging down\nto about eight feet from the floor. The walls of this room display a vivid scene as if one was centered in a forest meadow.\nThe grass and trees sway as if blown by wind. Investigation reveals that this is due to a permanent illusion. Laying along the north wall\nis a partially intact human skeleton. To the east lays a dark hallway, the west another with a blazing fireplace.\nThe air in the room is clear and drafty. The room smells putrid. A loud banging noise can be heard.'
             },
@@ -35,7 +38,7 @@ rooms = {
                 'west': 'Parlor',
                 'east': 'Trap Room',
                 'item': [{'old cloak':{
-                    'description': 'monster description'
+                    'description': 'A cloak made of a special type of material that is designed to conceal its wearer.'
                         }}],
                 'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. A longs streak of blood or perhaps dark\npaint runs along what appears to be the length of the wall. The ceiling is a flat reinforced with stone beam with regular rectangular shaped beams as you process\nfurther down the hall small blue-green flames appear above-head seeming to guide you forward. A ratty old cloak hangs from a hook on one wall.\nThe air in the hall feels heavy. The banging has ceased, but a loud slamming noise can be heard.'
             },
@@ -68,9 +71,9 @@ rooms = {
             'Secret Door': {
                 'south': 'Kitchen',
                 'item': [{'magic stone': {
-                    'description': 'stone description'
+                    'description': 'The magic stone has the ability of teleporting you to any room in an instant.'
                 }}],
-                'description': ''
+                'description': 'Congratulations! You have opened the secret door which holds something very powerful inside.'
             },
             'Boss Room': {
                 'item': [{'boss': {
