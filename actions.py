@@ -54,7 +54,7 @@ def get_item(move, location, inventory):
     for item in location['item']:
         # if the room contains an item, and the item is the one they want to get
         if "item" in location and move[1] in list(item.keys()):
-            if move[1] == "monster" or move[1] == "fireplace":
+            if move[1] in ["mini-boss", "boss", "fireplace"]:
                 print('Come on now...')
             # add the item to their inventory
             else:
@@ -119,12 +119,18 @@ def extinguish(move, location):
         print('The fire has been put out')
         # change West Hall fireplace blazing property to false
         location['item'][0]['fireplace']['blazing'] = False
+    elif move[1] == "fire" or move[1] == "fireplace" and location['item'][0]['fireplace']['blazing'] == False:
+        print("Fireplace already extinguished.")
+    else:
+        print("There is nothing to extinguish.")
 
 
 def pull_handle(move, location):
     if move[1] == "handle":
         print('You pull the handle and the north wall crumbles, revealing a staircase leading down')
         location['down'] = 'Boss Room'
+    else:
+        print("There is nothing to pull")
 
 
 def quit_game():
@@ -155,21 +161,18 @@ def fight(player, monster, location):
                 special = input("With every strike you felt you energy swell. It has now reach its limit.\n"
                                 "Your special is available. Would you like to use it?\n").lower()
                 # check value of special
-                if special == 'n' or 'no':
+                if special == 'n' or special == 'no':
                     if player['equipped_item'] == 'sword':
                         player_dmg = random.choice(player['attack']) * 2
                     else:
                         player_dmg = random.choice(player['attack'])
-
-                    print(f'You strike the beast dealing a massive {player_dmg} points')
-                    monster['health'] = monster['health'] - player_dmg
                 else:
                     if player['equipped_item'] == 'sword':
                         player_dmg = player['special'] * 2
                     else:
                         player_dmg = player['special']
-                    print(f'You strike the beast dealing {player_dmg} damage')
-                    monster['health'] = monster['health'] - player_dmg
+                print(f'You strike the beast dealing {player_dmg} damage')
+                monster['health'] -= player_dmg
                 special_gauge = 0
         else:
             if player['equipped_item'] == 'sword':
@@ -177,7 +180,7 @@ def fight(player, monster, location):
             else:
                 player_dmg = random.choice(player['attack'])
             print(f'You strike the beast dealing {player_dmg} damage')
-            monster['health'] = monster['health'] - player_dmg
+            monster['health'] -= player_dmg
     # if monster strike counter is 0 monster will attack and counter is reset
     else:
         monster_dmg = random.choice(monster['attack'])
@@ -187,17 +190,17 @@ def fight(player, monster, location):
         else:
             print(f'The beast strikes dealing {monster_dmg} damage')
             monster_strike_counter = 2
-            player['health'] = player['health'] - monster_dmg
+            player['health'] -= monster_dmg
 
     if monster['health'] <= 0:
         # check if mini-boss is in current room, if so delete
         if 'mini-boss' in location['item'][0]:
             del location['item'][0]['mini-boss']
-        # if not mini-boss only other monster option is boss which will be deleted
+            # if not mini-boss only other monster option is boss which will be deleted
         else:
             del location['item'][0]['boss']
             print('You managed to defeat the beast, revealing a door on the far side of the room.\n'
-                  'You open it and are teleported outside. You appear to have escaped! You win!')
+                'You open it and are teleported outside. You appear to have escaped! You win!')
             sys.exit()
 
     if player['health'] <= 0:
@@ -224,3 +227,13 @@ def boss_encounter(player, monster, location):
                       'You open it and are teleported outside.\n'
                       'You appear to have escaped. You win!')
                 sys.exit()
+
+
+def specify(move, inventory):
+    if move[0] in ['get', 'drop', 'inspect', 'equip', 'unequip']:
+        print(f'{move[0]} what?')
+    elif move[0] == 'go':
+        print(f'{move[0]} where?')
+    elif move[0] == 'teleport' and 'magic stone' not in inventory:
+        print(f'You need magic stone to {move[0]}')
+

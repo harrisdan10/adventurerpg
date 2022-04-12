@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 
-from dictionaries.rooms import rooms
-from dictionaries.player import player
-from dictionaries.monster import monsters
+from rooms import rooms
+from player import player
+from monster import monsters
 import time
 from os import system, name
 from playsound import playsound
-from game_logic.actions import *
+from actions import *
 
 playsound('adventure.mp3', False)
 
@@ -67,13 +67,12 @@ def showStatus():
         #     delay(f"You see a {list(rooms[currentRoom]['item'][0].keys())}")
         # elif:
         #     delay(f"You see a {rooms[currentRoom]['item'][0]}")
-
-        if len(rooms[currentRoom]['item']) != 0:
-            for item in rooms[currentRoom]['item']:
-                print(type(list(item.keys())))
-                delay(f"You see a {list(item.keys())}")
-        else:
-            delay(f"You see a {rooms[currentRoom]['item'][0]}")
+        try:
+            if len(rooms[currentRoom]['item']) != 0:
+                for item in rooms[currentRoom]['item']:
+                    delay(f"You see a {list(item.keys())}")
+        except:
+            delay(f"You see a {rooms[currentRoom]['item']}")
     print("---------------------------")
 
 
@@ -116,37 +115,39 @@ while True:
     # get golden key is returned ["get", "golden key"]
     move = move.lower().split(" ", 1)
 
-    # if they type 'go' first
-    if move[0] == 'go':
+    if len(move) == 1:
+        specify(move, inventory)
+
+    elif move[0] == 'go':
         currentRoom = movement(move, rooms[currentRoom], currentRoom, player_type, monster_type)
 
     # if they type 'get' first
-    if move[0] == 'get':
+    elif move[0] == 'get':
         get_item(move, rooms[currentRoom], inventory)
 
-    if move[0] == 'drop':
+    elif move[0] == 'drop':
         drop_item(move, rooms[currentRoom], inventory)
 
-    if move[0] == 'inspect':
+    elif move[0] == 'inspect':
         inspect_item(move, currentRoom, rooms[currentRoom])
 
-    if move[0] == 'equip' or move[0] == 'unequip':
+    elif move[0] == 'equip' or move[0] == 'unequip':
         equip_item(move, inventory, player_type)
 
-    if move[0] == 'teleport' and 'magic stone' in inventory:
+    elif move[0] == 'teleport' and 'magic stone' in inventory:
         currentRoom = teleport(move, rooms)
 
-    if move[0] == 'extinguish' and currentRoom == 'West Hall':
+    elif move[0] == 'extinguish' and currentRoom == 'West Hall':
         extinguish(move, rooms[currentRoom])
 
-    if move[0] == 'fight':
-        fight(player_type, monster_type, rooms[currentRoom])
-
-    if move[0] == 'pull':
+    elif move[0] == 'pull':
         pull_handle(move, rooms[currentRoom])
 
-    if move[0] == 'q' or move[0] == 'quit':
+    elif move[0] == 'q' or move[0] == 'quit':
         quit_game()
 
     if 'item' in rooms[currentRoom] and 'boss' in rooms[currentRoom]['item'][0] and player_type['equipped_item'] == "old cloak":
         boss_encounter(player_type, monster_type, rooms[currentRoom])
+
+    if move[0] == 'fight':
+        fight(player_type, monster_type, rooms[currentRoom])
