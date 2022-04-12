@@ -51,7 +51,7 @@ def inspect_item(move, current_room, descriptions):
 
 
 def get_item(move, location, inventory, descriptions):
-        # if the room contains an item, and the item is the one they want to get
+    # if the room contains an item, and the item is the one they want to get
     if "item" in location and move[1] in location['item']:
         if move[1] in ["mini-boss", "boss", "fireplace"]:
             print('Come on now...')
@@ -117,14 +117,12 @@ def extinguish(move, location, descriptions):
             del location['item']
 
 
-
 def pull_handle(move, location):
     if move[1] == "handle":
         print('You pull the handle and the north wall crumbles, revealing a staircase leading down')
         location['down'] = 'Boss Room'
     else:
         print("There is nothing to pull")
-
 
 
 def quit_game():
@@ -145,7 +143,6 @@ monster_strike_counter = 2
 def fight(player, monster, location):
     global special_gauge
     global monster_strike_counter
-
     if monster_strike_counter != 0:
         special_gauge += 1
         monster_strike_counter -= 1
@@ -187,7 +184,6 @@ def fight(player, monster, location):
             monster_strike_counter = 2
             player['health'] -= monster_dmg
 
-
     if monster['health'] <= 0:
         # check if mini-boss is in current room, if so delete
         if 'mini-boss' in location['item'][0]:
@@ -223,6 +219,7 @@ def boss_encounter(player, monster, location):
                       'You open it and are teleported outside.\n'
                       'You appear to have escaped. You win!')
                 sys.exit()
+
 
 def specify(move, inventory):
     if move[0] in ['get', 'drop', 'inspect', 'equip', 'unequip']:

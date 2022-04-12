@@ -1,7 +1,7 @@
 descriptions = [
     {
     'note': {
-        'description': 'placeholder note'
+        'description': 'To the east lies a beast and the west another. Be warned!'
     },
     'oil': {
         'description': 'A smooth, thick liquid that is used as a fuel or can be used to coat an item and set it ablaze.'
@@ -12,7 +12,7 @@ descriptions = [
     'sword': {
         'description': 'A weapon with a long, straight, sharp-edged blade that can be used to slay an enemy.'
     },
-    'old cloak': {
+    'cloak': {
         'description': 'A cloak made of a special type of material that is designed to conceal its wearer.'
     },
     'magic stone': {

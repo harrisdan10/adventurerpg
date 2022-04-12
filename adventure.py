@@ -8,12 +8,14 @@ import time
 from os import system, name
 from actions import *
 
+
 def delay(s):
     for c in s:
         sys.stdout.write(c)
         sys.stdout.flush()
         time.sleep(.03)
     print()
+
 
 def showInstructions():
     # print a main menu and the commands
@@ -22,7 +24,15 @@ RPG Game
 ========
 Commands:
   go [direction]
+  teleport [location]
   get [item]
+  drop [item]
+  inspect [item]
+  equip [item]
+  unequip [item]
+  pull[item]
+  fight
+  q/quit
 ''')
 
 
@@ -132,7 +142,7 @@ while True:
     elif move[0] == 'q' or move[0] == 'quit':
         quit_game()
 
-    if 'item' in rooms[currentRoom] and 'boss' in rooms[currentRoom]['item'][0] and player_type['equipped_item'] == "old cloak":
+    if 'item' in rooms[currentRoom] and 'boss' in rooms[currentRoom]['item'][0] and player_type['equipped_item'] == "cloak":
         boss_encounter(player_type, monster_type, rooms[currentRoom])
 
     if move[0] == 'fight':

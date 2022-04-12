@@ -23,7 +23,7 @@ rooms = {
             'East Hall': {
                 'west': 'Parlor',
                 'east': 'Trap Room',
-                'item': ['old cloak'],
+                'item': ['cloak'],
                 'description': 'This hall has a smoothly hewn natural stone floor that have been polished smooth. A longs streak of blood or perhaps dark\npaint runs along what appears to be the length of the wall. The ceiling is a flat reinforced with stone beam with regular rectangular shaped beams as you process\nfurther down the hall small blue-green flames appear above-head seeming to guide you forward. A ratty old cloak hangs from a hook on one wall.\nThe air in the hall feels heavy. The banging has ceased, but a loud slamming noise can be heard.'
             },
             'West Hall': {
