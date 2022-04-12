@@ -33,53 +33,44 @@ def teleport(move, rooms):
 
 
 # function to inspect items
-def inspect_item(move, current_room, location):
+def inspect_item(move, current_room, descriptions):
     # check if item (move[1]) is in current room
-    if move[1] in location['item'][0]:
-        if move[1] == 'sphinx' and current_room == 'Kitchen':
-            url = 'https://cat-fact.herokuapp.com/facts'
-            cat = requests.get(url).json()
-            cat_facts = []
-            for meow in cat:
-                cat_facts.append(meow.get("text"))
-            print(f"All-knowing Sphinx: {random.choice(cat_facts)}")
+    if move[1] == 'sphinx' and current_room == 'Kitchen':
+        url = 'https://cat-fact.herokuapp.com/facts'
+        cat = requests.get(url).json()
+        cat_facts = []
+        for meow in cat:
+            cat_facts.append(meow.get("text"))
+        print(f"All-knowing Sphinx: {random.choice(cat_facts)}")
     # check if the blazing property of West Hall fireplace is false
-    if not location['item'][0]['fireplace']['blazing']:
-        print(location['item'][0][move[1]]["description_2"])
-    else:
-        print(location['item'][0][move[1]]["description"])
-
-
-def get_item(move, location, inventory):
-    for item in location['item']:
-        # if the room contains an item, and the item is the one they want to get
-        if "item" in location and move[1] in list(item.keys()):
-            if move[1] in ["mini-boss", "boss", "fireplace"]:
-
-                print('Come on now...')
-            # add the item to their inventory
-            else:
-                inventory.append(move[1])
-
-                # display a helpful message
-                print(f"{move[1]} got!")
-                # check if the item has a description property
-                if "description" in item[move[1]]:
-                    print(f"{location['item'][0][move[1]]['description']}")
-                else:
-                    print(f"{item[move[1]]}")
-                # delete the item from the room
-                item_index = list(item.keys()).index(move[1])
-                if list(item.keys())[item_index] == move[1]:
-                    # print('deleted')
-                    del location['item'][0][move[1]]
-                    if len(location['item'][0]) == 0:
-                        del location['item']
-
-            # otherwise, if the item isn't there to get
+    if move[1] in descriptions[0]:
+        if current_room == 'West Hall' and not descriptions[0]['fireplace']['blazing']:
+            print(descriptions[0][move[1]]["description_2"])
         else:
-            # tell them they can't get it
-            print(f"Can\'t get {move[1]} !")
+            print(descriptions[0][move[1]]["description"])
+
+
+def get_item(move, location, inventory, descriptions):
+        # if the room contains an item, and the item is the one they want to get
+    if "item" in location and move[1] in location['item']:
+        if move[1] in ["mini-boss", "boss", "fireplace"]:
+            print('Come on now...')
+        # add the item to their inventory
+        else:
+            inventory.append(move[1])
+
+        # display a helpful message
+        print(f"{move[1]} got!")
+        item_index = location['item'].index(move[1])
+        del location['item'][item_index]
+        if len(location['item']) == 0:
+            del location['item']
+        # check if the item has a description property
+        if move[1] in descriptions[0]:
+            print(f"{descriptions[0][move[1]]['description']}")
+    else:
+        # tell them they can't get it
+        print(f"Can\'t get {move[1]} !")
 
 
 def drop_item(move, location, inventory):
@@ -90,7 +81,7 @@ def drop_item(move, location, inventory):
             inventory.remove(move[1])
             print(f'{move[1]} was dropped')
         else:
-            location['item'][0][move[1]] = (move[1])
+            location['item'].append(move[1])
             inventory.remove(move[1])
             print(f'{move[1]} was dropped')
     # there is no door (link) to the new room
@@ -115,15 +106,15 @@ def equip_item(move, inventory, player):
             print(f"You don't have a {move[1]} in your equipped!")
 
 
-def extinguish(move, location):
+def extinguish(move, location, descriptions):
     if move[1] == "fire" or move[1] == "fireplace":
         print('The fire has been put out')
         # change West Hall fireplace blazing property to false
-        location['item'][0]['fireplace']['blazing'] = False
-    elif move[1] == "fire" or move[1] == "fireplace" and location['item'][0]['fireplace']['blazing'] == False:
-        print("Fireplace already extinguished.")
-    else:
-        print("There is nothing to extinguish.")
+        descriptions[0][move[1]]['blazing'] = False
+        item_index = location['item'].index(move[1])
+        del location['item'][item_index]
+        if len(location['item']) == 0:
+            del location['item']
 
 
 

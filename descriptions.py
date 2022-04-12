@@ -17,5 +17,9 @@ descriptions = [
     },
     'magic stone': {
         'description': 'The magic stone has the ability of teleporting you to any room in an instant.'
+    },'fireplace': {
+        'description': 'Behind the blazing flames you see a handle.',
+        'description_2': 'You see a handle at the back of the fireplace',
+        'blazing': True
     }
 }]

@@ -3,6 +3,7 @@
 from rooms import rooms
 from player import player
 from monster import monsters
+from descriptions import descriptions
 import time
 from os import system, name
 from actions import *
@@ -25,19 +26,19 @@ Commands:
 ''')
 
 
-def clear():
-    # for windows
-    if name == 'nt':
-        _ = system('cls')
+# def clear():
+#     # for windows
+#     if name == 'nt':
+#         _ = system('cls')
 
-    # for mac and linux(here, os.name is 'posix')
-    else:
-        _ = system('clear')
+#     # for mac and linux(here, os.name is 'posix')
+#     else:
+#         _ = system('clear')
 
 
 def showStatus():
     global monster_type
-    clear()
+    # clear()
     # print the player's current status
     print('---------------------------')
     print('You are in the ' + currentRoom)
@@ -56,21 +57,8 @@ def showStatus():
         print()
         print(rooms[currentRoom]['description'])
     print()
-
-    # print an item if there is one
     if "item" in rooms[currentRoom]:
-        # if len(rooms[currentRoom]['item'][0].keys()) != 0:
-        #     print(len(rooms[currentRoom]['item']))
-        #     delay(f"You see a {list(rooms[currentRoom]['item'][0].keys())}")
-        # elif:
-        #     delay(f"You see a {rooms[currentRoom]['item'][0]}")
-        try:
-            if len(rooms[currentRoom]['item']) != 0:
-                for item in rooms[currentRoom]['item']:
-                    delay(f"You see a {list(item.keys())}")
-        except:
-            delay(f"You see a {rooms[currentRoom]['item']}")
-
+        delay(f"You see a {rooms[currentRoom]['item']}")
     print("---------------------------")
 
 
@@ -121,13 +109,13 @@ while True:
 
     # if they type 'get' first
     elif move[0] == 'get':
-        get_item(move, rooms[currentRoom], inventory)
+        get_item(move, rooms[currentRoom], inventory, descriptions)
 
     elif move[0] == 'drop':
         drop_item(move, rooms[currentRoom], inventory)
 
     elif move[0] == 'inspect':
-        inspect_item(move, currentRoom, rooms[currentRoom])
+        inspect_item(move, currentRoom, descriptions)
 
     elif move[0] == 'equip' or move[0] == 'unequip':
         equip_item(move, inventory, player_type)
@@ -135,8 +123,8 @@ while True:
     elif move[0] == 'teleport' and 'magic stone' in inventory:
         currentRoom = teleport(move, rooms)
 
-    elif move[0] == 'extinguish' and currentRoom == 'West Hall':
-        extinguish(move, rooms[currentRoom])
+    if move[0] == 'extinguish' and currentRoom == 'West Hall':
+        extinguish(move, rooms[currentRoom], descriptions)
 
     elif move[0] == 'pull':
         pull_handle(move, rooms[currentRoom])
