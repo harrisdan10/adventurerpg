@@ -8,7 +8,7 @@ import requests
 def movement(move, location, current_room, player, monster):
     if move[1] in location:
         # check if location has 'item' property. If so is 'mini-boss' a value
-        if 'item' in location and 'mini-boss' in location['item'][0]:
+        if 'item' in location and 'mini-boss' in location['item']:
             print('There is no escape. It is kill or be killed! You must fight!')
             return current_room
         else:
@@ -110,11 +110,11 @@ def extinguish(move, location, descriptions):
     if move[1] == "fire" or move[1] == "fireplace":
         print('The fire has been put out')
         # change West Hall fireplace blazing property to false
-        descriptions[0][move[1]]['blazing'] = False
-        item_index = location['item'].index(move[1])
-        del location['item'][item_index]
-        if len(location['item']) == 0:
-            del location['item']
+        descriptions[0]['fireplace']['blazing'] = False
+        # item_index = location['item'].index(move[1])
+        # del location['item'][item_index]
+        # if len(location['item']) == 0:
+        #     del location['item']
 
 
 def pull_handle(move, location):
@@ -187,10 +187,9 @@ def fight(player, monster, location):
     if monster['health'] <= 0:
         # check if mini-boss is in current room, if so delete
         if 'mini-boss' in location['item'][0]:
-            del location['item'][0]['mini-boss']
+            location['item'].pop()
         # if not mini-boss only other monster option is boss which will be deleted
         else:
-            del location['item'][0]['boss']
             print('You managed to defeat the beast, revealing a door on the far side of the room.\n'
                   'You open it and are teleported outside. You appear to have escaped! You win!')
             sys.exit()
@@ -200,25 +199,11 @@ def fight(player, monster, location):
         sys.exit()
 
 
-# variable to control whether player chooses to fight boss
-fighter = False
-
-
 def boss_encounter(player, monster, location):
-    global fighter
-    fight_flight = ''
-    if not fighter:
-        while fight_flight == '' or fight_flight not in ['y', 'n', 'yes', 'no']:
-            fight_flight = input('For some reason the beast has not detected you. Do you want to fight?\n'
-                                 '[Y/N]\n').lower()
-            if fight_flight == 'y' or fight_flight == 'yes':
-                fighter = True
-                fight(player, monster, location)
-            else:
-                print('You sneak past the beast to a door on the far side of the room.\n'
-                      'You open it and are teleported outside.\n'
-                      'You appear to have escaped. You win!')
-                sys.exit()
+    print('You sneak past the beast to a door on the far side of the room.\n'
+        'You open it and are teleported outside.\n'
+        'You appear to have escaped. You win!')
+    sys.exit()
 
 
 def specify(move, inventory):

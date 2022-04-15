@@ -57,10 +57,10 @@ def showStatus():
     print('Inventory : ' + str(inventory))
     print('Equipped : ', player_type["equipped_item"])
     print('Health: ', player_type["health"])
-    if 'item' in rooms[currentRoom] and 'mini-boss' in rooms[currentRoom]['item'][0]:
+    if 'item' in rooms[currentRoom] and 'mini-boss' in rooms[currentRoom]['item']:
         monster_type = monsters['Mini-Boss']
         print('Monster Health: ', monster_type['health'])
-    elif 'item' in rooms[currentRoom] and 'boss' in rooms[currentRoom]['item'][0]:
+    elif 'item' in rooms[currentRoom] and 'boss' in rooms[currentRoom]['item']:
         monster_type = monsters['Boss']
         print('Monster Health: ', monster_type['health'])
     else:
